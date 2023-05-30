@@ -2,6 +2,7 @@
 import { Container, Title, Text, Box, Image } from "@mantine/core";
 import image_recommendation from "@/assets/recomendación.png";
 import image_recommendation2 from "@/assets/recomendacion2.png";
+import form_submit from "@/assets/form_submit.png";
 import { Carousel } from "@mantine/carousel";
 
 export function Analize() {
@@ -69,6 +70,42 @@ export function Analize() {
                   <Image src={image_recommendation2.src} alt="recomendation" />
                 </Carousel.Slide>
               </Carousel>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              gap: 20,
+              marginTop: "40px",
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+              }}
+            >
+              <Image src={form_submit.src} alt="form submit" />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <Title
+                order={2}
+                sx={{
+                  fontSize: "40px",
+                }}
+              >
+                Postula al Instante
+              </Title>
+              <Text
+                sx={{
+                  fontSize: "20px",
+                }}
+              >
+                La mejor experiencia de usuario para postular a una nueva oferta
+                de empleo
+              </Text>
             </Box>
           </Box>
         </Container>
