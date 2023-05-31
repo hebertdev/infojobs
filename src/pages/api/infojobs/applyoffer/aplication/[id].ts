@@ -4,14 +4,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const infoJobsToken = process.env.PUBLIC_BASIC_AUTH;
     const { id } = req.query; // obtener el "id" de los parámetros de la URL
-
     const applyOfferBody = req.body.applyOfferBody;
-
-    console.log(req.body)
-
-    console.log(id)
-    console.log(applyOfferBody)
-
     const response = await fetch(`https://api.infojobs.net/api/4/offer/${id}/application`, {
       method: 'POST',
       headers: {

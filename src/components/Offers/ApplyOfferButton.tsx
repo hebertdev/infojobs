@@ -170,26 +170,23 @@ function ModalForm({ opened, close, offer }: ModalFormProps) {
   };
 
   const handleSubmitApplyOffer = async () => {
-    console.log(applyOfferBody);
-
-    if (killerQuestions) {
-      if (
-        parseInt(killerQuestions?.length!.toString()) !==
-        parseInt(applyOfferBody.offerKillerQuestions.length.toString())
-      ) {
-        notifications.show({
-          title: "Error",
-          message: "Todos los campos son requerido, marca una opción",
-          color: "red",
-        });
-        return;
-      }
-    }
-
-    if (openQuestions?.length! !== applyOfferBody.offerOpenQuestions.length) {
+    if (
+      killerQuestions &&
+      parseInt(killerQuestions.length.toString()) !==
+        applyOfferBody.offerKillerQuestions.length
+    ) {
       notifications.show({
         title: "Error",
-        message: "Todos los campos son requerido, responde a la pregunta.",
+        message: "Todos los campos son requeridos, marca una opción",
+        color: "red",
+      });
+      return;
+    }
+
+    if (openQuestions?.length !== applyOfferBody.offerOpenQuestions.length) {
+      notifications.show({
+        title: "Error",
+        message: "Todos los campos son requeridos, responde a la pregunta",
         color: "red",
       });
       return;
@@ -198,22 +195,20 @@ function ModalForm({ opened, close, offer }: ModalFormProps) {
     if (applyOfferBody.curriculumCode === "") {
       notifications.show({
         title: "Error",
-        message: "Todos los campos son requerido, selecciona tu cv",
+        message: "Todos los campos son requeridos, selecciona tu CV",
         color: "red",
       });
       return;
     }
 
-    if (applyOfferBody) {
-      for (let i = 0; i < applyOfferBody.offerOpenQuestions.length; i++) {
-        if (applyOfferBody.offerOpenQuestions[i].answer === "") {
-          notifications.show({
-            title: "Error",
-            message: "Todos los campos son requerido, responde a la pregunta.",
-            color: "red",
-          });
-          return;
-        }
+    for (let i = 0; i < applyOfferBody.offerOpenQuestions.length; i++) {
+      if (applyOfferBody.offerOpenQuestions[i].answer === "") {
+        notifications.show({
+          title: "Error",
+          message: "Todos los campos son requeridos, responde a la pregunta",
+          color: "red",
+        });
+        return;
       }
     }
 
@@ -221,31 +216,49 @@ function ModalForm({ opened, close, offer }: ModalFormProps) {
       setLoadingSubmit(true);
       const { data } = await axiosInstance.post(
         `/api/infojobs/applyoffer/aplication/${offer.id}`,
-        { applyOfferBody: applyOfferBody }
+        {
+          applyOfferBody: applyOfferBody,
+        }
       );
+
       if (data) {
         await handleGetAplications();
         notifications.show({
-          title: "success",
+          title: "Success",
           message: "Te postulaste a esta oferta correctamente",
           color: "green",
         });
       }
+
       setLoadingSubmit(false);
     } catch (error) {
       notifications.show({
         title: "Error",
-        message: "Ocurrió un error, intentelo más tarde",
+        message: "Ocurrió un error, intenta nuevamente más tarde",
         color: "red",
       });
       setLoadingSubmit(false);
     }
   };
 
+  const handleCloseModal = async () => {
+    close();
+  };
+
+  useEffect(() => {
+    setApplyOfferBody({
+      curriculumCode: "",
+      offerOpenQuestions: [],
+      offerKillerQuestions: [],
+    });
+    setCoverLetters([]);
+    setKillerQuestion([]);
+    setOpenQuestions([]);
+  }, [opened]);
   return (
     <Modal
       opened={opened}
-      onClose={close}
+      onClose={handleCloseModal}
       centered
       size={"xl"}
       title={
@@ -347,8 +360,9 @@ function ModalForm({ opened, close, offer }: ModalFormProps) {
               }}
               fullWidth
               onClick={handleSubmitApplyOffer}
+              disabled={loadingSubmit}
             >
-              Postular ahora
+              {loadingSubmit ? "Enviando postulación" : " Postular ahora"}
             </Button>
           </Box>
         </form>

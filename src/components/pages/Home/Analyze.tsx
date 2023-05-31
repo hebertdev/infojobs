@@ -145,7 +145,7 @@ export function Analize() {
                 }}
               >
                 La mejor experiencia de usuario para postular a una nueva oferta
-                de empleo
+                de empleo.
               </Text>
             </Box>
           </Box>

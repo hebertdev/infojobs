@@ -1,38 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Chatpad AI](./banner.png)
 
-## Getting Started
+<h1 align="center">Infojobs CareerUp</h1>
+<h2 align="center">La mejor experiencia para buscar empleo</h2>
+<!-- <p align="center"><a href="https://chatpad.ai">Web App</a> & <a href="https://download.chatpad.ai">Desktop App</a></p> -->
+<p align="center"><a href="https://chatflex.hebertdev.net">Web App</a> </p>
 
-First, run the development server:
+CareerUp es una plataforma de búsqueda de empleo inteligente diseñada para ayudarte a avanzar en tu carrera. Con características innovadoras y el uso de IA, CareerUp te ofrece una experiencia personalizada y eficiente en tu búsqueda de trabajo.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### ⚡️ Free and open source
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This app is provided for free and the source code is available on GitHub.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### 🔒 Privacy focused
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+No tracking
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### ✨ Best experience
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Crafted with love and care to provide the best experience possible.
 
-## Learn More
+## Give Feedback
 
-To learn more about Next.js, take a look at the following resources:
+If you have any feature requests or bug reports, go to [Twitter|hebertdev](https://twitter.com/hebertdev1).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contribution
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This is a Next.js application built with Vite and TypeScript. To run the project, clone it and run the following commands:
 
-## Deploy on Vercel
+`npm install`
+`npm run dev`
+`npm run build`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+And you're good to go to start contributing!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+A small part is built in Django: https://github.com/hebertdev/infojobs_api
+
+## Credits
+
+- [MANTINEUI](https://mantine.dev/) - A fully featured React component library

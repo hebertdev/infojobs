@@ -120,7 +120,6 @@ export function AnalyzeButton({ offerDetail, isApplied }: Props) {
 
           setRecommendation(analize_json);
           if (analize_json) {
-            console.log(analize_json);
             let resultados: any = [];
             const promesas = analize_json.youtube_queries.map((query: string) =>
               searchVideos(query)

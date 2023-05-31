@@ -43,6 +43,16 @@ export function Jobs() {
       <Center>
         <ToggleButtonOffers />
       </Center>
+      <Text
+        sx={{
+          textAlign: "center",
+          marginTop: "20px",
+          fontWeight: "bold",
+        }}
+      >
+        Disfruta de la mejor experiencia, desde la búsqueda del empleo perfecto
+        hasta la postulación.
+      </Text>
       <Box
         sx={{
           display: "flex",

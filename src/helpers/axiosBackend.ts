@@ -9,7 +9,6 @@ export const axiosInstanceBackend = axios.create({
 
 axiosInstanceBackend.interceptors.request.use((config) => {
   const token = getToken();
-  console.log(API_BASE_URL)
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
