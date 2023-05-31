@@ -111,11 +111,13 @@ export function AnalyzeButton({ offerDetail, isApplied }: Props) {
           mi_cv,
         };
         if (json) {
-          const { data: analize } = await axiosInstance.post(
-            "/api/infojobs/analize",
-            { oferrandcv: json }
+          const { data: analize } = await axiosInstanceBackend.post(
+            "/analize/",
+            { texto: JSON.stringify(json) }
           );
-          const analize_json = JSON.parse(analize);
+
+          const analize_json = analize.respuesta;
+
           setRecommendation(analize_json);
           if (analize_json) {
             console.log(analize_json);
@@ -140,8 +142,18 @@ export function AnalyzeButton({ offerDetail, isApplied }: Props) {
 
         setLoading(false);
       }
+
+      notifications.show({
+        title: "Success",
+        message: `Análisis terminado`,
+        color: "green",
+      });
     } catch (error) {
-      console.log(error);
+      notifications.show({
+        title: "Error",
+        message: `Ocurrió un error al analizar, intentelo de nuevo.`,
+        color: "red",
+      });
       setLoading(false);
     }
   };
@@ -195,7 +207,10 @@ export function AnalyzeButton({ offerDetail, isApplied }: Props) {
         {loading ? (
           <>
             <Box>
-              <Text>Analizando...</Text>
+              <Text>
+                Analizando... Este análisis se esta basando en tu CV(principal)
+                de Infojobs y la oferta seleecionada.
+              </Text>
               <Progress
                 value={progressValue}
                 role="progressbar"
@@ -220,6 +235,10 @@ export function AnalyzeButton({ offerDetail, isApplied }: Props) {
                 darte información valiosa para mejorar tus habilidades y
                 aumentar tus oportunidades de destacarte en el proceso de
                 selección.
+                <br />
+                <br />
+                El análisis se esta basará en tu CV(principal) de Infojobs y la
+                oferta seleecionada.
                 <Button
                   variant="gradient"
                   gradient={{ from: "#4cdbd5", to: "#2088c2", deg: 90 }}
@@ -403,6 +422,8 @@ function CarrouselVideos({ learningSuggestion }: CarrouselVideosProps) {
 import { Card, Image, Group } from "@mantine/core";
 import { ApplyOfferButton } from "./ApplyOfferButton";
 import { SkeletonText } from "./SkeletonText";
+import { axiosInstanceBackend } from "@/helpers/axiosBackend";
+import { notifications } from "@mantine/notifications";
 
 interface VideoProps {
   video: any;

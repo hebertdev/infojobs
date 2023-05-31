@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { axiosInstanceBackend } from "@/helpers/axiosBackend";
 import { setToken , getToken } from "@/helpers/auth";
 import { useUserContext } from "./useUserContext";
+import { notifications } from "@mantine/notifications";
 
 export const useAuthentication = () => {
   const [loading, setLoading] = useState(false);
@@ -37,11 +38,26 @@ export const useAuthentication = () => {
       router.push("/");
       setToken(data.tokens.access_token);
       handleSetUser(data.candidate_data)
+      notifications.show({
+        title: "Success",
+        message: `Bienvenido, ${data.candidate_data.name}`,
+        color: "green",
+      });
 
     } catch (error) {
       console.log(error);
+      notifications.show({
+        title: "Error",
+        message: `Ocurrió un error al Iniciar sesión`,
+        color: "red",
+      });
     } finally {
       setLoading(false);
+      notifications.show({
+        title: "Error",
+        message: `Ocurrió un error al Iniciar sesión`,
+        color: "red",
+      });
     }
   };
 

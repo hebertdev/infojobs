@@ -12,6 +12,7 @@ import { deleteToken, getToken } from "@/helpers/auth";
 //interfaces
 import { Candidate, Cv, FutureJob } from "@/interfaces/user";
 import { AplicationResponse, Application } from "@/interfaces/aplications";
+import { notifications } from "@mantine/notifications";
 
 export interface UserContextProps {
   user: Candidate | undefined | null;
@@ -59,10 +60,16 @@ export function UserContextProvider({ children }: DarkModeProvider) {
     try {
       toggleLoadingUser(true);
       const { data } = await axiosInstanceBackend.get("/users/whoami/");
+
       setUser(data.candidate);
       toggleLoadingUser(false);
     } catch (error) {
       toggleLoadingUser(false);
+      notifications.show({
+        title: "Error",
+        message: `Ocurrió un error al conectarte con infojobs`,
+        color: "red",
+      });
     }
   };
 

@@ -17,13 +17,13 @@ export function Analize() {
           borderRadius: "20px",
           marginTop: "50px",
         }}
+        id="ia_analize"
       >
         <Container
           size={"xl"}
           sx={{
             padding: "20px",
           }}
-          id="ia_analize"
         >
           <Box
             sx={{
@@ -31,6 +31,7 @@ export function Analize() {
               display: "flex",
               alignItems: "center",
               gap: 20,
+              margin: "40px auto",
             }}
           >
             <Box sx={{ flex: 1 }}>
@@ -62,12 +63,51 @@ export function Analize() {
                 flex: 1,
               }}
             >
-              <Carousel mx="auto" withIndicators>
+              <Carousel mx="auto" withIndicators withControls={false}>
                 <Carousel.Slide>
-                  <Image src={image_recommendation.src} alt="recomendation" />
+                  <Box
+                    sx={{
+                      position: "relative",
+                      borderRadius: "10px",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image src={image_recommendation.src} alt="recomendation" />
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: 0,
+                        background:
+                          "linear-gradient(to top, #a1efaa, #ffffffad , #2088c200)",
+                        height: "180px",
+                        width: "100%",
+                      }}
+                    />
+                  </Box>
                 </Carousel.Slide>
                 <Carousel.Slide>
-                  <Image src={image_recommendation2.src} alt="recomendation" />
+                  <Box
+                    sx={{
+                      position: "relative",
+                      borderRadius: "10px",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      src={image_recommendation2.src}
+                      alt="recomendation"
+                    />
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: 0,
+                        background:
+                          "linear-gradient(to top, #f38c86, #ffffffad , #2088c200)",
+                        height: "180px",
+                        width: "100%",
+                      }}
+                    />
+                  </Box>
                 </Carousel.Slide>
               </Carousel>
             </Box>
@@ -80,6 +120,7 @@ export function Analize() {
               alignItems: "center",
               gap: 20,
               marginTop: "40px",
+              marginBottom: "40px",
             }}
           >
             <Box
