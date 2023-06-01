@@ -30,6 +30,7 @@ export function useGetFirstOffers() {
     handleSetIsLoading,
     handleSetCurrentPage,
     handleSetUrlParams,
+    handleSetIsForYou
   } = jobOffersActions;
 
   const [offerDetail, setOfferDetail] = useState<Offer | null>(null);
@@ -68,6 +69,7 @@ export function useGetFirstOffers() {
   const handleGetMoreOffers = async (page: number) => {
     try {
       handleSetIsLoading(true);
+      handleSetIsForYou("no")
       const params = new URLSearchParams();
       for (const key in urlParams) {
         if (Object.prototype.hasOwnProperty.call(urlParams, key)) {

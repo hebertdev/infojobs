@@ -1,12 +1,17 @@
 //components
 import { SearchForm } from "@/components/SearchForm";
 
+//hooks
+import { useUserContext } from "@/hooks/useUserContext";
+
+//mantine
 import { Text, Container, Box, Title } from "@mantine/core";
 
 //assets
 import banner from "assets/banner_infojobs.webp";
 
 export function About() {
+  const { user } = useUserContext();
   return (
     <Box
       sx={{
@@ -59,8 +64,14 @@ export function About() {
               color: "white",
             }}
           >
-            Inicia sesión y activa herramientas exclusivas, Encuentra resultados
-            personalizados y potencia tu carrera.
+            {user ? (
+              <>
+                Hola <b>{user.name}, </b>
+              </>
+            ) : (
+              "Inicia sesión y activa herramientas exclusivas,"
+            )}
+            Encuentra resultados personalizados y potencia tu carrera.
           </Text>
         </Container>
       </Box>
@@ -81,7 +92,7 @@ export function About() {
         >
           <path
             d="M0.00,49.98 C131.77,91.30 361.45,92.28 500.84,57.73 L500.00,150.00 L0.00,150.00 Z"
-            style={{ stroke: "none", fill: "#FFF" }}
+            style={{ stroke: "none", fill: "#f9fbfc" }}
           />
         </svg>
       </Box>

@@ -44,7 +44,6 @@ export function ActionButtons({
     <Box
       sx={{
         display: "flex",
-        marginBottom: "10px",
         alignItems: "center",
       }}
     >

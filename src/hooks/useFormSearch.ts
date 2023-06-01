@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 
@@ -27,6 +26,7 @@ export function useFormSearch() {
     handleSetIsLoading,
     handleSetCurrentPage,
     handleSetUrlParams,
+    handleSetIsForYou
   } = jobOffersActions;
 
   const handleSubmitSearch = async () => {
@@ -35,6 +35,7 @@ export function useFormSearch() {
     }
     try {
       handleSetIsLoading(true);
+      handleSetIsForYou("no")
       const params = new URLSearchParams();
       for (const key in urlParams) {
         if (Object.prototype.hasOwnProperty.call(urlParams, key)) {

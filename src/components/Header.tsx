@@ -141,7 +141,7 @@ export function AppHeader() {
               </Menu.Target>
               <Menu.Dropdown>HOMECITO</Menu.Dropdown>
             </Menu> */}
-            {router.asPath === "/offers" && <SearchForm />}
+            {router.asPath !== "/" && <SearchForm />}
           </Group>
           <ButtonAuth handleGetToken={handleGetToken} loading={loading} />
         </Container>

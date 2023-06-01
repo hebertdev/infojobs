@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NextApp, { AppProps, AppContext } from "next/app";
 import "@/styles/globals.css";
 import { MantineProvider } from "@mantine/core";
@@ -23,6 +23,11 @@ import NextNProgress from "nextjs-progressbar";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
+
+  useEffect(() => {
+    document.body.style.background = "#f9fbfc";
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>

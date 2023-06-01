@@ -67,8 +67,10 @@ export function Jobs() {
             position: "absolute",
             content: '" "',
             bottom: 0,
+            // background:
+            //   "linear-gradient(to top, #ffffff, #ffffffad , #2088c200)",f9fbfc
             background:
-              "linear-gradient(to top, #ffffff, #ffffffad , #2088c200)",
+              "linear-gradient(to top, #f9fbfc, #ffffffad , #2088c200)",
             width: "100%",
             height: "80px",
             zIndex: 1,
@@ -111,7 +113,7 @@ export function Jobs() {
                   <CardOffer
                     key={offer.id}
                     offer={offer}
-                    background={offer.id === offerDetail?.id ? "#0000000d" : ""}
+                    background={offer.id === offerDetail?.id ? "#e8eff3cc" : ""}
                     handleSetOfferDetail={handleSetOfferDetail}
                   />
                 ))}
@@ -139,7 +141,14 @@ export function Jobs() {
       </Box>
       <Center>
         <Link href={"/offers"}>
-          <Button variant="outline">ver más ofertas</Button>
+          <Button
+            radius={"xl"}
+            sx={{
+              marginTop: "15px",
+            }}
+          >
+            Ver más ofertas
+          </Button>
         </Link>
       </Center>
     </Container>

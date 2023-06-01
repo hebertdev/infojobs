@@ -17,6 +17,7 @@ import { IconMapPin, IconBuildingEstate } from "@tabler/icons-react";
 
 //assets
 import logo_empresa from "@/assets/empresa_logo.webp";
+import { SkeletonText } from "./SkeletonText";
 
 interface Props {
   offer: Offer;
@@ -35,7 +36,7 @@ export function CardOfferDetail({ offer }: Props) {
     return data;
   };
 
-  const query = useQuery([`offerdetail-${offer.id}`], () =>
+  const { data: query, isLoading } = useQuery([`offerdetail-${offer.id}`], () =>
     getOfferDetail(offer.id)
   );
 
@@ -64,7 +65,6 @@ export function CardOfferDetail({ offer }: Props) {
           }
         />
       </Box>
-
       <Text
         size="sm"
         color="dimmed"
@@ -83,38 +83,49 @@ export function CardOfferDetail({ offer }: Props) {
         />
         {offer.city}
       </Text>
-
       <Box
         sx={{
-          marginTop: "15px",
+          marginTop: "10px",
           display: "flex",
           gap: 20,
           flexWrap: "wrap",
         }}
       >
         <Text size="sm" color="dimmed">
-          Contrato: {query.data?.contractType.value}
+          Contrato: {query?.contractType.value}
         </Text>
         <Text size="sm" color="dimmed">
-          Jornada: {query.data?.journey.value}
+          Jornada: {query?.journey.value}
         </Text>
         <Text size="sm" color="dimmed">
           {offer.teleworking?.value}
         </Text>
         <Text size="sm" color="dimmed">
-          Salario: {query.data?.salaryDescription}
+          Salario: {query?.salaryDescription}
         </Text>
       </Box>
-      {!user && (
-        <small style={{ color: "red" }}>
-          Inicia sesión para activar estas funciones
-        </small>
-      )}
 
-      <ActionButtons offer={offer} offerDetail={query.data} />
+      <small style={{ color: "red", marginTop: "10px", display: "block" }}>
+        {!user && <>Inicia sesión para activar estas funciones </>}
+      </small>
 
+      <ActionButtons offer={offer} offerDetail={query} />
+      <Text
+        size="sm"
+        color="dimmed"
+        sx={{
+          marginBottom: "10px",
+          marginTop: "5px",
+        }}
+      >
+        {query?.applications! > 0 && (
+          <>
+            {" "}
+            {query?.applications} Inscrito{query?.applications !== 0 && "s"}{" "}
+          </>
+        )}
+      </Text>
       {/*  <Divider color="#dee2e6" /> */}
-
       <Tabs defaultValue={activeTab} onTabChange={setActiveTab}>
         <Tabs.List position="apart">
           <Tabs.Tab value="SKILLS">SKILLS</Tabs.Tab>
@@ -123,82 +134,106 @@ export function CardOfferDetail({ offer }: Props) {
           <Tabs.Tab value="EMPRESA">EMPRESA</Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel value="SKILLS" pt="xs">
-          <Text weight={"bold"}>NIVEL</Text>
-          <Text> {query.data?.jobLevel.value} </Text>
-          <Text weight={"bold"}>PERSONAL A CARGO</Text>
-          <Text> {query.data?.staffInCharge.value} </Text>
-          <Box
-            sx={{
-              display: "flex",
-              gap: 5,
-              flexWrap: "wrap",
-              marginTop: "20px",
-            }}
-          >
-            {query.data?.skillsList.map((skill: any, index) => (
-              <Badge color="green" key={index}>
-                {skill.skill}
-              </Badge>
-            ))}
-          </Box>
-        </Tabs.Panel>
+        {isLoading ? (
+          <SkeletonText />
+        ) : (
+          <>
+            <Tabs.Panel value="SKILLS" pt="xs">
+              <Text weight={"bold"}>NIVEL</Text>
+              <Text> {query?.jobLevel.value} </Text>
+              {query?.staffInCharge.id !== 0 && (
+                <>
+                  <Text weight={"bold"}>PERSONAL A CARGO</Text>
+                  <Text>
+                    {query?.staffInCharge.value === "0"
+                      ? "Ninguno"
+                      : query?.staffInCharge.value}
+                  </Text>
+                </>
+              )}
 
-        <Tabs.Panel value="RESPONSABILIDADES" pt="xs">
-          <Text weight={"bold"}>DESCRIPCIÓN</Text>
-          <Text
-            sx={{
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {query?.data?.description}
-          </Text>
-        </Tabs.Panel>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 5,
+                  flexWrap: "wrap",
+                  marginTop: "20px",
+                }}
+              >
+                {query?.skillsList.map((skill: any, index) => (
+                  <Badge color="yellow" key={index} size="lg">
+                    {skill.skill}
+                  </Badge>
+                ))}
+              </Box>
+            </Tabs.Panel>
 
-        <Tabs.Panel value="REQUISITOS" pt="xs">
-          <Text weight={"bold"}>Estudios mínimos</Text>
-          <Text> {query?.data?.studiesMin.value}</Text>
-          <Text weight={"bold"}>Experiencia mínima</Text>
-          <Text> {query?.data?.experienceMin.value}</Text>
-          <Text weight={"bold"}>Requisitos mínimos</Text>
-          <Text
-            sx={{
-              whiteSpace: "pre-line",
-            }}
-          >
-            {query?.data?.minRequirements}
-          </Text>
-        </Tabs.Panel>
-        <Tabs.Panel value="EMPRESA" pt="xs">
-          <Text weight={"bold"}>EMPRESA</Text>
-          <Text>
-            {query.data?.profile.name}{" "}
-            {query.data?.profile.url && (
-              <>
-                -{" "}
-                <a
-                  href={query.data?.profile.url}
-                  target="_blank"
-                  style={{ color: "#228be6" }}
-                >
-                  {query.data?.profile.url}
-                </a>
-              </>
-            )}
-          </Text>
-          <Text weight={"bold"}>INDUSTRIA</Text>
-          <Text> {query.data?.profile.typeIndustry.value} </Text>
-          <Text weight={"bold"}>VACANTES</Text>
-          <Text> {query.data?.vacancies} </Text>
-          <Text weight={"bold"}>DESCRIPCIÓN</Text>
-          <Text
-            sx={{
-              whiteSpace: "pre-line",
-            }}
-          >
-            {query.data?.profile.description}
-          </Text>
-        </Tabs.Panel>
+            <Tabs.Panel value="RESPONSABILIDADES" pt="xs">
+              <Text weight={"bold"}>DESCRIPCIÓN</Text>
+              <Text
+                sx={{
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {query?.description}
+              </Text>
+            </Tabs.Panel>
+
+            <Tabs.Panel value="REQUISITOS" pt="xs">
+              <Text weight={"bold"}>Estudios mínimos</Text>
+              <Text> {query?.studiesMin.value}</Text>
+              <Text weight={"bold"}>Experiencia mínima</Text>
+              <Text> {query?.experienceMin.value}</Text>
+              {query?.minRequirements! && (
+                <>
+                  <Text weight={"bold"}>Requisitos mínimos</Text>
+                  <Text
+                    sx={{
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {query?.minRequirements}
+                  </Text>
+                </>
+              )}
+            </Tabs.Panel>
+            <Tabs.Panel value="EMPRESA" pt="xs">
+              <Text weight={"bold"}>EMPRESA</Text>
+              <Text>
+                {query?.profile.name}{" "}
+                {query?.profile.url && (
+                  <>
+                    -{" "}
+                    <a
+                      href={query?.profile.url}
+                      target="_blank"
+                      style={{ color: "#228be6" }}
+                    >
+                      {query?.profile.url}
+                    </a>
+                  </>
+                )}
+              </Text>
+              {query?.profile.typeIndustry.id !== 0 && (
+                <>
+                  <Text weight={"bold"}>INDUSTRIA</Text>
+                  <Text> {query?.profile.typeIndustry.value} </Text>
+                </>
+              )}
+
+              <Text weight={"bold"}>VACANTES</Text>
+              <Text> {query?.vacancies} </Text>
+              <Text weight={"bold"}>DESCRIPCIÓN</Text>
+              <Text
+                sx={{
+                  whiteSpace: "pre-line",
+                }}
+              >
+                {query?.profile.description}
+              </Text>
+            </Tabs.Panel>
+          </>
+        )}
       </Tabs>
     </>
   );

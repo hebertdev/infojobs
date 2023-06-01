@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-
+import Head from "next/head";
 //hooks
 import { useGetFirstOffers } from "@/hooks/useGetFirstOffers";
 
@@ -22,7 +22,6 @@ import {
 //mantine
 import {
   Container,
-  SegmentedControl,
   Box,
   Text,
   Skeleton,
@@ -32,7 +31,6 @@ import {
 
 //interfaces
 import { Offer } from "@/interfaces/offers";
-import { useJobOffersState } from "@/hooks/useJobOfferState";
 import { ToggleButtonOffers } from "@/components/ToggleButtonOffers";
 
 export default function OffersPage() {
@@ -67,144 +65,144 @@ export default function OffersPage() {
 
   const boxRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    // Hacer scroll hacia arriba cuando cambie currentPage
     if (boxRef.current) {
       boxRef.current.scrollTop = 0;
     }
   }, [currentPage]);
 
-  const [state, actions] = useJobOffersState();
-  const { isForYou } = state;
-  const { handleSetIsForYou } = actions;
-
   return (
-    <Container
-      size={"xl"}
-      sx={{
-        padding: "0 20px",
-      }}
-    >
-      <Box
+    <>
+      <Head>
+        <title>Ofertas de empleo | Infojobs</title>
+      </Head>
+      <Container
+        size={"xl"}
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          margin: "10px 0",
+          padding: "0 20px",
         }}
       >
-        <ToggleButtonOffers />
-
-        <WorkplaceButton />
-        <DateButton />
-        <SalaryButton />
-        <WorkdayButton />
-        <ContractButton />
-        <ExperiencieButton />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 10,
-          height: "calc(100vh - 130px)",
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
-        <Card
+        <Box
           sx={{
-            flex: 2,
-            padding: "0px !important",
-            height: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            margin: "10px 0",
+          }}
+        >
+          <ToggleButtonOffers />
+
+          <WorkplaceButton />
+          <DateButton />
+          <SalaryButton />
+          <WorkdayButton />
+          <ContractButton />
+          <ExperiencieButton />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 10,
+            height: "calc(100vh - 130px)",
+            overflow: "hidden",
             position: "relative",
           }}
-          shadow="sm"
-          radius="md"
-          withBorder
         >
-          <Box
+          <Card
             sx={{
+              flex: 2,
+              padding: "0px !important",
               height: "100%",
-              overflow: "auto",
+              position: "relative",
             }}
-            ref={boxRef}
+            shadow="sm"
+            radius="md"
+            withBorder
           >
-            <Text
-              weight={500}
+            <Box
               sx={{
-                padding: "15px",
-                borderBottom: "0.0625rem solid #dee2e6",
+                height: "100%",
+                overflow: "auto",
+              }}
+              ref={boxRef}
+            >
+              <Text
+                weight={500}
+                sx={{
+                  padding: "15px",
+                  borderBottom: "0.0625rem solid #dee2e6",
+                }}
+              >
+                {isLoading ? (
+                  <Skeleton width={"60%"} height={16} />
+                ) : (
+                  <>{totalResults} Ofertas de empleo</>
+                )}
+              </Text>
+
+              <Box>
+                {isLoading ? (
+                  <>
+                    {[1, 2, 3].map((_, index) => (
+                      <CardOfferSkeleton key={index} />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {allOffers?.map((offer: Offer, index) => (
+                      <CardOffer
+                        key={index}
+                        offer={offer}
+                        background={
+                          offer.id === offerDetail?.id ? "#e8eff3cc" : ""
+                        }
+                        handleSetOfferDetail={handleSetOfferDetail}
+                      />
+                    ))}
+                    <div style={{ height: "39px" }} />
+                  </>
+                )}
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                width: "100%",
+                bottom: 0,
+                position: "absolute",
+                background: "white",
+                height: "40px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderTop: "0.0625rem solid #dee2e6",
               }}
             >
-              {isLoading ? (
-                <Skeleton width={"60%"} height={16} />
-              ) : (
-                <>{totalResults} Ofertas de empleo</>
-              )}
-            </Text>
-
-            <Box>
-              {isLoading ? (
-                <>
-                  {[1, 2, 3].map((_, index) => (
-                    <CardOfferSkeleton key={index} />
-                  ))}
-                </>
-              ) : (
-                <>
-                  {allOffers?.map((offer: Offer, index) => (
-                    <CardOffer
-                      key={index}
-                      offer={offer}
-                      background={
-                        offer.id === offerDetail?.id ? "#0000000d" : ""
-                      }
-                      handleSetOfferDetail={handleSetOfferDetail}
-                    />
-                  ))}
-                  <div style={{ height: "39px" }} />
-                </>
-              )}
+              <Pagination
+                value={currentPage}
+                total={totalPages}
+                onChange={(value: number) => handleOnChangePagination(value)}
+              />
             </Box>
-          </Box>
-          <Box
+          </Card>
+
+          <Card
+            shadow="sm"
+            p="lg"
+            radius="md"
+            withBorder
             sx={{
-              width: "100%",
-              bottom: 0,
-              position: "absolute",
-              background: "white",
-              height: "40px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              borderTop: "0.0625rem solid #dee2e6",
+              flex: 3,
+              overflow: "auto",
+              height: "100%",
             }}
           >
-            <Pagination
-              value={currentPage}
-              total={totalPages}
-              onChange={(value: number) => handleOnChangePagination(value)}
-            />
-          </Box>
-        </Card>
-
-        <Card
-          shadow="sm"
-          p="lg"
-          radius="md"
-          withBorder
-          sx={{
-            flex: 3,
-            overflow: "auto",
-            height: "100%",
-          }}
-        >
-          {offerDetail && (
-            <>
-              <CardOfferDetail offer={offerDetail} />
-            </>
-          )}
-        </Card>
-      </Box>
-    </Container>
+            {offerDetail && (
+              <>
+                <CardOfferDetail offer={offerDetail} />
+              </>
+            )}
+          </Card>
+        </Box>
+      </Container>
+    </>
   );
 }

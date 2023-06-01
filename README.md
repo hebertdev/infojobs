@@ -3,7 +3,7 @@
 <h1 align="center">Infojobs CareerUp</h1>
 <h2 align="center">La mejor experiencia para buscar empleo</h2>
 <!-- <p align="center"><a href="https://chatpad.ai">Web App</a> & <a href="https://download.chatpad.ai">Desktop App</a></p> -->
-<p align="center"><a href="https://chatflex.hebertdev.net">Web App</a> </p>
+<p align="center"><a href="https://infojobs.hebertdev.net">Web App</a> </p>
 
 CareerUp es una plataforma de búsqueda de empleo inteligente diseñada para ayudarte a avanzar en tu carrera. Con características innovadoras y el uso de IA, CareerUp te ofrece una experiencia personalizada y eficiente en tu búsqueda de trabajo.
 
