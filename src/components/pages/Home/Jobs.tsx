@@ -117,6 +117,17 @@ export function Jobs() {
                     handleSetOfferDetail={handleSetOfferDetail}
                   />
                 ))}
+                {allOffers?.length === 0 && (
+                  <Box
+                    sx={{
+                      width: "80%",
+                      margin: "40px auto",
+                    }}
+                  >
+                    Lamentablemente, no hemos encontrado ninguna oferta que se
+                    ajuste a tus parámetros de búsqueda. 🥲
+                  </Box>
+                )}
               </>
             )}
           </Box>

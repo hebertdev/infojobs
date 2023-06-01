@@ -159,6 +159,18 @@ export default function OffersPage() {
                       />
                     ))}
                     <div style={{ height: "39px" }} />
+
+                    {allOffers?.length === 0 && (
+                      <Box
+                        sx={{
+                          width: "80%",
+                          margin: "auto",
+                        }}
+                      >
+                        Lamentablemente, no hemos encontrado ninguna oferta que
+                        se ajuste a tus parámetros de búsqueda. 🥲
+                      </Box>
+                    )}
                   </>
                 )}
               </Box>

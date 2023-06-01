@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import {
   createStyles,
@@ -98,6 +99,10 @@ export function NavbarProfile({ children }: NavbarProfileProps) {
     if (router.asPath === "/profile") {
       setActiveLink("cuenta");
     }
+
+    if (router.asPath === "/profile/cv") {
+      setActiveLink("cv");
+    }
   }, [router]);
 
   return (
@@ -128,29 +133,35 @@ export function NavbarProfile({ children }: NavbarProfileProps) {
               >
                 Configuración
               </Title>
+              <Link href={"/profile"}>
+                <p
+                  className={cx(classes.link, {
+                    [classes.linkActive]: activeLink === "cuenta",
+                  })}
+                >
+                  <IconSettings
+                    className={classes.linkIcon}
+                    stroke={1.5}
+                    style={{ color: "inherit" }}
+                  />
+                  <span>Cuenta</span>
+                </p>
+              </Link>
 
-              <a
-                href="#"
-                className={cx(classes.link, {
-                  [classes.linkActive]: activeLink === "cuenta",
-                })}
-                onClick={(event) => event.preventDefault()}
-              >
-                <IconSettings
-                  className={classes.linkIcon}
-                  stroke={1.5}
-                  style={{ color: "inherit" }}
-                />
-                <span>Cuenta</span>
-              </a>
-              <a
-                href="#"
-                className={classes.link}
-                onClick={(event) => event.preventDefault()}
-              >
-                <IconUserCircle className={classes.linkIcon} stroke={1.5} />
-                <span>Perfil profesional</span>
-              </a>
+              <Link href={"/profile/cv"}>
+                <p
+                  className={cx(classes.link, {
+                    [classes.linkActive]: activeLink === "cv",
+                  })}
+                >
+                  <IconUserCircle
+                    className={classes.linkIcon}
+                    stroke={1.5}
+                    style={{ color: "inherit" }}
+                  />
+                  <span>Perfil profesional</span>
+                </p>
+              </Link>
               <a
                 href="#"
                 className={classes.link}
